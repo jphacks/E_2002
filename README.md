@@ -1,6 +1,7 @@
 # SMARM
 
-[![IMAGE SMARM](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
+[![IMAGE SMARM](https://user-images.githubusercontent.com/73453598/98379694-ed13b700-208a-11eb-8032-d70412bbb94f.png)](https://www.youtube.com/watch?v=IIMCaGkYzOM&feature=youtu.be)
+※動画リンク付き
 
 ## 製品概要
 目覚まし×Tech
@@ -267,7 +268,17 @@ Yolo v4
 * 赤外線モジュールを用いて自動で部屋の電気をオンにできるようにした。
 * サーボモータを用いて物理的に目覚めを促す機構を開発した。
 
-* 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください。
+
+* 特に力を入れた部分
+DBからグラフに可視化するためのデータの受け渡し部分
+smarm/wakeup/views.py
+OPTIONページの，スイッチ切り替えによる特定ボタンの無効化部分
+smarm/wakeup/templates/wakeup/howto.html
+
+PC部分の異なる方法、異なるデバイス、異なるデータ形式との通信部分である
+パソコン/connect_arduino.py
+パソコン/connect_jetson.py
+パソコン/connect_server.py
 
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 Yolo v4 
