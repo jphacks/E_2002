@@ -134,7 +134,6 @@ DBからグラフに可視化するためのデータの受け渡し部分
 smarm/wakeup/views.py  
 OPTIONページの，スイッチ切り替えによる特定ボタンの無効化部分  
 smarm/wakeup/templates/wakeup/howto.html  
-
 PC部分の異なる方法、異なるデバイス、異なるデータ形式との通信部分である  
 PC/connect_arduino.py  
 PC/connect_jetson.py  
