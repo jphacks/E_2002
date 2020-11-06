@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="{% static 'img/mark.png' %}">
+  <title>Smart Alarm</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  {% block import_css %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-logo"><a href="{% url 'wakeup:top' %}" id="logo_id"><img src="{% static 'img/logo.jpg' %}" alt="WAKEUPLOGO"></a></h1>
+    <nav class="gnav">
+      <ul class="gnav__menu">
+        <div class="gnav__menu__item"><a href="{% url 'wakeup:top' %}" id="top_id">TOP</a></div>
+        <div class="gnav__menu__item"><a href="{% url 'wakeup:month_with_schedule' %}" id="schedule_id">SCHEDULE</a></div>
+        <div class="gnav__menu__item"><a href="{% url 'wakeup:howto' %}" id="options_id">HOW TO WAKE UP</a></div>
+      </ul>
+    </nav>
+  </header>
+{% block all_content %}{% endblock %}
+</body>
+</html>

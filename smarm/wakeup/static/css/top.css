@@ -1,0 +1,88 @@
+* {
+  margin: 0px;
+  padding:0px;
+}
+
+.contents {
+  padding-top: 80px;
+}
+
+.Graph{
+  width: 79rem;
+  height: 43rem;
+  margin: auto;
+  background-color:#E6FFE9;
+}
+
+#top_body{
+  background-color:#E6FFE9;
+}
+
+#LineChart{
+  padding-left: 18rem;
+  padding-right: 18rem;
+  padding-top: 7rem;
+  padding-bottom: 0px;
+  background-color:#ffffff;
+}
+
+form{
+  position: absolute;
+  top: 80px;
+
+}
+
+select#ab_or_re_id{
+  position: absolute;
+  margin-top: 7.3rem;
+  left: 83.8rem;
+}
+
+#select_label_id{
+  position: absolute;
+  margin-top: 5rem;
+  left: 80rem;
+}
+
+#before_button_id{
+  position: absolute;
+  padding:10px;
+  top: 47rem;
+  margin-right: 70rem;
+  margin-left: 20rem;
+}
+
+#next_button_id{
+  position: relative;
+  padding:10px;
+  top: 47rem;
+  margin-left: 97rem;
+}
+
+
+#day_button_id{
+  position: absolute;
+  padding:15px;
+  padding-right: 35px;
+  padding-left: 35px;
+  top: 1.2rem;
+  margin-left: 48.7rem;
+}
+
+#week_button_id{
+  position: absolute;
+  padding:15px;
+  padding-right: 35px;
+  padding-left: 35px;
+  top: 1.2rem;
+  margin-left: 55.9rem;
+}
+
+#month_button_id{
+  position: absolute;
+  padding:15px;
+  padding-right: 35px;
+  padding-left: 35px;
+  top: 1.2rem;
+  margin-left: 63.2rem;
+}

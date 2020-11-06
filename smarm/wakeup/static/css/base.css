@@ -1,0 +1,62 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background: #fff;
+}
+
+header{
+    background: #81bcd8;
+    height: 80px;
+    position: fixed;
+    top: 0px;
+    z-index: 100;
+}
+
+.site-header{
+    background: #fdfdff;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.site-logo img{
+    height: 80px;
+    padding: 0px 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    width: auto;
+}
+
+.gnav__menu{
+    padding-left: 0px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 0px;
+    display: flex;
+}
+.gnav__menu__item{
+    margin-left: 80px;
+    margin-right: 20px;
+}
+
+
+#top_id,#schedule_id, #options_id {
+  color: #777777;
+  font-family:'Gautami';
+  font-size: 30px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#top_id{
+  padding-left: 250px;
+}
+
+a#logo_id{
+  position: absolute;
+  top: 0px;
+  height: 80px;
+}

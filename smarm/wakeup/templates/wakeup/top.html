@@ -1,0 +1,159 @@
+{% extends 'wakeup/base.html' %}
+{% load static %}
+
+{% block title %}WAKE UP SCHEDULE{% endblock %}
+
+{%block all_content %}
+
+<body id="top_body">
+  <div class="contents">
+
+
+    <div id="LineChart" class="Graph">
+      <canvas id="myLineChart" ></canvas>
+    </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <form action="/" method="POST" name="subm_form">
+        {% csrf_token %}
+        <input type='hidden' name="day_week_month" value={{day_week_month}}/>
+        <input type='hidden' name="absolute_or_relative" value={{absolute_or_relative}}/>
+        <input type='hidden' name="standard_date" value={{standard_date}}/>
+        <input type="submit" value=" Day " name='day_button' id="day_button_id">
+        <input type="submit" value="Week" name='week_button' id="week_button_id">
+        <input type="submit" value="Month" name='month_button' id="month_button_id">
+        <input type="submit" value="Before" name='before_button' id="before_button_id">
+        <input type="submit" value=" Next " name='next_button' id="next_button_id">
+        <select name="ab_or_re" id="ab_or_re_id" onchange="submiFunc(this);">
+          {% if  absolute_or_relative == 'absolute'%}
+          <option value="absolute" name='absolute_button' id="absolute_button_id">起床時間と目標時間を表示</option>
+          <option value="relative" name='relative_button' id="relative_button_id">目標時間と起床時間との差を表示</option>
+          {% else %}
+          <option value="relative" name='relative_button' id="relative_button_id">目標時間と起床時間との差を表示</option>
+          <option value="absolute" name='absolute_button' id="absolute_button_id">起床時間と目標時間を表示</option>
+          {% endif %}
+        </select>
+        <h6 id='select_label_id'>表示形式:</h6>
+    </form>
+
+  </div>
+
+</body>
+  <script>
+  function submiFunc(obj) {
+    index = document.subm_form.ab_or_re.selectedIndex;
+    obj.form.ab_or_re.value = document.subm_form.ab_or_re.options[index].value;
+    obj.form.submit();
+  }
+
+  let Y_data = {{Y_data|safe}}
+  let ideal = {{ideal|safe}}
+  for (var i=0 ;i < Y_data.length;i++){
+    if(Y_data[i] == ""){
+      Y_data[i] =null;
+    }
+    if(ideal[i] == ""){
+      ideal[i]=null;
+    }
+  }
+  var datasets = [
+    {
+      label: '起床時間',
+      data: Y_data,
+      borderColor: "rgba(255,0,0,1)",
+      backgroundColor: "rgba(255,0,0,1)",
+      fill: false,
+
+    },
+    {
+      label: '目標起床時間',
+      data:ideal ,
+      borderColor: "rgba(0,0,255,1)",
+      backgroundColor: "rgba(0,0,255,1)",
+      fill: false,
+    }
+  ]
+
+
+  var ctx = document.getElementById("myLineChart");
+  var myLineChart = new Chart(ctx, {
+    showTooltips: true,
+    type: 'line',
+    data: {
+      labels: {{xlabels|safe}},
+      datasets: datasets ,
+    },
+    options: {
+      legend: {
+         labels: {
+             fontSize: 14,
+             boxWidth: 40,
+                  }
+              },
+      tooltips: {
+          callbacks: {
+                title: function (tooltipItem, data){
+                    return '';
+                },
+                label: function(tooltipItem, data){
+                  var value = tooltipItem.yLabel;
+
+                  {% if absolute_or_relative == 'absolute' %}
+                    if (value%60==0){
+                      return String((value-value%60)/60) +':'+String(value%60)+"0";
+                    }
+                    else if (value%10==0){
+                      return String((value-value%60)/60) +':'+String(value%60);
+                    }
+                      return String((value-value%60)/60) +':'+'0'+String(value%60);
+                  }
+                  {% else %}
+                    return String(value) +'分後に起床';
+                  }
+                  {% endif %}
+                 }
+              },
+
+      spanGaps: true,
+
+      title: {
+        display: false,
+        text: ''
+      },
+
+      scales: {
+        yAxes: [
+          {
+            {% if absolute_or_relative == 'relative' %}
+            gridLines:{
+              zeroLineColor:"rgba(0,0,255,1)",
+            },
+            {% endif %}
+            ticks: {
+              min: {{min_score}},
+              max: {{max_score}},
+
+              callback: function(value, index, values) {
+              {% if absolute_or_relative == 'absolute' %}
+                if (value%60==0){
+                  return String((value-value%60)/60) +':'+String(value%60)+"0";
+                }
+                else if (value%10==0){
+                  return String((value-value%60)/60) +':'+String(value%60);
+                }
+                  return String((value-value%60)/60) +':'+'0'+String(value%60);
+              }
+              {% else %}
+                return String(value) +'分';
+              }
+              {% endif %}
+
+            }
+          }
+        ]
+      },
+    }
+  });
+  </script>
+  <link rel="stylesheet" href="{% static 'css/top.css' %}">
+
+{% endblock %}

@@ -1,0 +1,306 @@
+{% extends 'wakeup/base.html' %}
+{% load static %}
+
+
+{%block all_content %}
+<link rel="stylesheet" href="{% static 'css/howto.css' %}">
+<body onLoad="load_data()" name="body_name">
+
+  <form action="/howto/" method="POST" id='form_id' name='form_name'>
+
+    {% csrf_token %}
+    <div id="schedule_option">
+      <h1 id="schedule_title_id">スケジュール設定</h1>
+      <div>
+          <span id="switch_means">スケジュールに予定がない日に目覚ましを設定</span>
+          <div class="switch">
+                  <label class="switch__label">
+                    {% if default_alarm == "on" %}
+                    <input type="checkbox"  name="default_alarm" id="default_alarm" checked="checked" class="switch__input" onchange="is_valid_alarm(this.checked);"/>
+                    {% else %}
+                    <input type="checkbox"  name="default_alarm" id="default_alarm" class="switch__input" onchange="is_valid_alarm(this.checked);"/>
+                    {% endif %}
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>
+        </div>
+
+        <div>
+          <span id="switch_means">すべての日に目覚ましを設定</span>
+          <div class="switch">
+                  <label class="switch__label">
+                    {% if all_switch == "on" %}
+                    <input type="checkbox"  name="all_switch" id="all_switch" checked="checked" class="switch__input" onchange="is_valid_allday(this.checked);"/>
+                    {% else %}
+                    <input type="checkbox"  name="all_switch" id="all_switch" class="switch__input" onchange="is_valid_allday(this.checked);"/>
+                    {% endif %}
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>
+        </div>
+        <div>
+          <input type="time" name="all_time" id="all_time" value={{all_time}}>
+        </div>
+        <div>
+          <span id="switch_means">土日に目覚ましを設定</span>
+          <div class="switch">
+                  <label class="switch__label">
+                    {% if holiday_switch == "on" %}
+                    <input type="checkbox"  name="holiday_switch" id="holiday_switch" checked="checked" class="switch__input"
+                          onchange="is_valid_data('holiday_time',this.checked);"/>
+                    {% else %}
+                    <input type="checkbox"  name="holiday_switch" id="holiday_switch" class="switch__input"
+                          onchange="is_valid_data('holiday_time',this.checked);"/>
+                    {% endif %}
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>
+        </div>
+        <div>
+          <input type="time" name="holiday_time" id="holiday_time" value={{holiday_time}}>
+        </div>
+
+        <div>
+          <span id="switch_means">平日(月～金)に目覚ましを設定</span>
+          <div class="switch">
+                  <label class="switch__label">
+                    {% if weekdays_switch == "on" %}
+                    <input type="checkbox"  name="weekdays_switch" id="weekdays_switch" checked="checked" class="switch__input"
+                          onchange="is_valid_data('weekdays_time',this.checked);"/>
+                    {% else %}
+                    <input type="checkbox"  name="weekdays_switch" id="weekdays_switch" class="switch__input"
+                          onchange="is_valid_data('weekdays_time',this.checked);"/>
+                    {% endif %}
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>
+        </div>
+        <div>
+          <input type="time" name="weekdays_time" id="weekdays_time" value={{weekdays_time}}>
+        </div>
+
+        <div>
+          <span id="switch_means">曜日を指定して目覚ましを設定</span>
+          <div class="switch">
+                  <label class="switch__label">
+                    {% if day_of_the_week == "on" %}
+                    <input type="checkbox"  name="day_of_the_week" id="day_of_the_week" checked="checked" class="switch__input"
+                          onchange="is_valid_day_of_the_week(this.checked);"/>
+
+                    {% else %}
+                    <input type="checkbox"  name="day_of_the_week" id="day_of_the_week" class="switch__input"
+                          onchange="is_valid_day_of_the_week(this.checked);"/>
+                    {% endif %}
+
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>
+        </div>
+        <div>
+          {% if monday_switch == "on" %}
+          <label><input type="checkbox"  name="monday_switch" value="on" id='day_of_week1' checked='checked'
+                        onchange="is_valid_data('time_mon',this.checked);">月曜</label>：
+
+          {% else %}
+          <label><input type="checkbox"  name="monday_switch" value="on" id='day_of_week1'
+                        onchange="is_valid_data('time_mon',this.checked);">月曜</label>：
+          {% endif %}
+          <input type="time" name="monday_time" id="time_mon" value={{monday_time}}>
+        </div>
+        <div>
+          {% if tuesday_switch == "on" %}
+          <label><input type="checkbox"  name="tuesday_switch" value="on" id='day_of_week2' checked="checked"
+                        onchange="is_valid_data('time_tues',this.checked);">火曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="tuesday_switch" value="on" id='day_of_week2'
+                        onchange="is_valid_data('time_tues',this.checked);">火曜</label>：
+          {% endif %}
+          <input type="time" name="tuesday_time" id="time_tues" value="{{tuesday_time}}">
+        </div>
+        <div>
+          {% if wednesday_switch == "on" %}
+          <label><input type="checkbox"  name="wednesday_switch" value="on" id='day_of_week3' checked="checked"
+                        onchange="is_valid_data('time_wednes',this.checked);">水曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="wednesday_switch" value="on" id='day_of_week3'
+                        onchange="is_valid_data('time_wednes',this.checked);">水曜</label>：
+          {% endif %}
+          <input type="time" name="wednesday_time" id="time_wednes" value="{{wednesday_time}}">
+        </div>
+        <div>
+          {% if thursday_switch == "on" %}
+          <label><input type="checkbox"  name="thursday_switch" value="on" id='day_of_week4' checked="checked"
+                        onchange="is_valid_data('time_thurs,this.checked);">木曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="thursday_switch" value="on" id='day_of_week4'
+                        onchange="is_valid_data('time_thurs',this.checked);">木曜</label>：
+          {% endif %}
+          <input type="time" name="thursday_time" id="time_thurs" value="{{thursday_time}}">
+        </div>
+        <div>
+          {% if friday_switch == "on" %}
+          <label><input type="checkbox"  name="friday_switch" value="on" id='day_of_week5' checked="checked"
+                        onchange="is_valid_data('time_fri',this.checked);">金曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="friday_switch" value="on" id='day_of_week5'
+                        onchange="is_valid_data('time_fri',this.checked);">金曜</label>：
+          {% endif %}
+          <input type="time" name="friday_time" id="time_fri" value="{{friday_time}}">
+        </div>
+        <div>
+          {% if saturday_switch == "on" %}
+          <label><input type="checkbox"  name="saturday_switch" value="on" id='day_of_week6' checked="checked"
+                        onchange="is_valid_data('time_satur',this.checked);">土曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="saturday_switch" value="on" id='day_of_week6'
+                        onchange="is_valid_data('time_satur',this.checked);">土曜</label>：
+          {% endif %}
+          <input type="time" name="saturday_time" id="time_satur" value="{{saturday_time}}">
+        </div>
+        <div>
+          {% if sunday_switch == "on" %}
+          <label><input type="checkbox"  name="sunday_switch" value="on" id='day_of_week7' checked="checked"
+                        onchange="is_valid_data('time_sun',this.checked);">日曜</label>：
+          {% else %}
+          <label><input type="checkbox"  name="sunday_switch" value="on" id='day_of_week7'
+                        onchange="is_valid_data('time_sun',this.checked);">日曜</label>：
+          {% endif %}
+          <input type="time" name="sunday_time" id="time_sun" value="{{sunday_time}}">
+        </div>
+    </div>
+
+    <div id="how_to_option">
+      <h1 id="how_to_title_id">起床方法設定</h1>
+      <div>
+        <span id="switch_means">サーボモータを使って起こす</span>
+        <div class="switch">
+                <label class="switch__label">
+                  {% if use_servo == "on" %}
+                  <input type="checkbox"  name='use_servo' checked="checked" class="switch__input"/>
+                  {% else %}
+                  <input type="checkbox"  name='use_servo' class="switch__input"/>
+                  {% endif %}
+                  <span class="switch__content"></span>
+                  <span class="switch__circle"></span>
+                </label>
+              </div>
+      </div>
+
+      <div>
+        <span id="switch_means">アラームで起こす</span>
+        <div class="switch">
+                <label class="switch__label">
+                  {% if use_sound == "on" %}
+                  <input type="checkbox"  name="use_sound" checked="checked" class="switch__input"/>
+                  {% else %}
+                  <input type="checkbox"  name="use_sound" class="switch__input"/>
+                  {% endif %}
+                  <span class="switch__content"></span>
+                  <span class="switch__circle"></span>
+                </label>
+              </div>
+      </div>
+    </div>
+    <input type="submit" value="設定を保存する" id="submit_button">
+    </form>
+
+    <script>
+    function is_valid_day_of_the_week(ischecked ) {
+       if( ischecked == true ) {
+          document.getElementById('time_mon').disabled = false;
+          document.getElementById('time_tues').disabled = false;
+          document.getElementById('time_wednes').disabled = false;
+          document.getElementById('time_thurs').disabled = false;
+          document.getElementById('time_fri').disabled = false;
+          document.getElementById('time_satur').disabled = false;
+          document.getElementById('time_sun').disabled = false;
+          document.getElementById('day_of_week1').disabled = false;
+          document.getElementById('day_of_week2').disabled = false;
+          document.getElementById('day_of_week3').disabled = false;
+          document.getElementById('day_of_week4').disabled = false;
+          document.getElementById('day_of_week5').disabled = false;
+          document.getElementById('day_of_week6').disabled = false;
+          document.getElementById('day_of_week7').disabled = false;
+       }
+       else {
+        document.getElementById('time_mon').disabled = true;
+        document.getElementById('time_tues').disabled = true;
+        document.getElementById('time_wednes').disabled = true;
+        document.getElementById('time_thurs').disabled = true;
+        document.getElementById('time_fri').disabled = true;
+        document.getElementById('time_satur').disabled = true;
+        document.getElementById('time_sun').disabled = true;
+        document.getElementById('day_of_week1').disabled = true;
+        document.getElementById('day_of_week2').disabled = true;
+        document.getElementById('day_of_week3').disabled = true;
+        document.getElementById('day_of_week4').disabled = true;
+        document.getElementById('day_of_week5').disabled = true;
+        document.getElementById('day_of_week6').disabled = true;
+        document.getElementById('day_of_week7').disabled = true;
+       }
+    }
+
+    function is_valid_data( textid, ischecked ) {
+       if( ischecked == true ) {
+          // チェックが入っていたら有効化
+          document.getElementById(textid).disabled = false;
+       }
+       else {
+          // チェックが入っていなかったら無効化
+          document.getElementById(textid).disabled = true;
+       }
+    }
+    function is_valid_alarm(ischecked){
+      is_valid_day_of_the_week(ischecked)
+      is_valid_data("all_time",ischecked)
+      is_valid_data("holiday_time",ischecked)
+      is_valid_data("holiday_switch",ischecked)
+      is_valid_data("weekdays_time",ischecked)
+      is_valid_data("weekdays_switch",ischecked)
+      is_valid_data("day_of_the_week",ischecked)
+      is_valid_data("all_switch",ischecked)
+    }
+    function is_valid_allday(ischecked){
+      is_valid_data("all_time",ischecked)
+      if( ischecked == true ){
+        is_valid_day_of_the_week(false)
+        is_valid_data("holiday_time",false)
+        is_valid_data("holiday_switch",false)
+        is_valid_data("weekdays_time",false)
+        is_valid_data("weekdays_switch",false)
+        is_valid_data("day_of_the_week",false)
+      }
+      else{
+        is_valid_day_of_the_week(true)
+        is_valid_data("holiday_time",true)
+        is_valid_data("holiday_switch",true)
+        is_valid_data("weekdays_time",true)
+        is_valid_data("weekdays_switch",true)
+        is_valid_data("day_of_the_week",true)
+      }
+    }
+    function load_data(){
+        is_valid_alarm(document.getElementsByName('default_alarm')[0].checked);
+        is_valid_allday(document.getElementsByName('all_switch')[0].checked);
+        is_valid_day_of_the_week(document.getElementsByName('day_of_the_week')[0].checked)
+        is_valid_data('holiday_time',document.getElementsByName('holiday_switch')[0].checked)
+        is_valid_data('weekdays_time',document.getElementsByName('weekdays_switch')[0].checked)
+        is_valid_data('time_sun',document.getElementsByName('sunday_switch')[0].checked)
+        is_valid_data('time_mon',document.getElementsByName('monday_switch')[0].checked)
+        is_valid_data('time_tues',document.getElementsByName('tuesday_switch')[0].checked)
+        is_valid_data('time_wednes',document.getElementsByName('wednesday_switch')[0].checked)
+        is_valid_data('time_thurs',document.getElementsByName('thursday_switch')[0].checked)
+        is_valid_data('time_fri',document.getElementsByName('friday_switch')[0].checked)
+        is_valid_data('time_satur',document.getElementsByName('saturday_switch')[0].checked)
+
+    }
+    </script>
+
+
+</body>
+{% endblock %}
