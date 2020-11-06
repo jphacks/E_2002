@@ -1,12 +1,17 @@
-# サンプル（プロダクト名）
+# SMARM
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
+[![IMAGE SMARM](https://jphacks.com/wp-content/uploads/2020/09/JPHACKS2020_ogp.jpg)](https://www.youtube.com/watch?v=G5rULR53uMk)
 
 ## 製品概要
+目覚ましベッド
 ### 背景(製品開発のきっかけ、課題等）
 ### 製品説明（具体的な製品の説明）
+目覚まし機能を有したIotベッドです。
+#### 使い方
+1.
 ### 特長
 ####1. 特長1
+https://www.smarm-mikha.com/
 ####2. 特長2
 ####3. 特長3
 
