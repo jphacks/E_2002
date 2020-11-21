@@ -1,5 +1,5 @@
 from django import forms
-from .models import Schedule
+from .models import Schedule, SoundFile
 
 
 class BS4ScheduleForm(forms.ModelForm):
@@ -43,3 +43,8 @@ class SimpleScheduleForm(forms.ModelForm):
             }),
             'date': forms.HiddenInput,
         }
+
+class SoundFileForm(forms.ModelForm):
+    class Meta:
+        model = SoundFile
+        fields = '__all__'

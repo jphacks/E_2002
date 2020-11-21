@@ -1,12 +1,14 @@
 {% extends 'wakeup/base.html' %}
 {% load static %}
-
+{% load original_tags %}
 
 {%block all_content %}
+{% block mirai_akari_css %}{% endblock %}
 <link rel="stylesheet" href="{% static 'css/howto.css' %}">
+
 <body onLoad="load_data()" name="body_name">
 
-  <form action="/howto/" method="POST" id='form_id' name='form_name'>
+  <form action="/howto/" method="POST" id='form_id' name='form_name' enctype="multipart/form-data">
 
     {% csrf_token %}
     <div id="schedule_option">
@@ -104,112 +106,299 @@
         <div>
           {% if monday_switch == "on" %}
           <label><input type="checkbox"  name="monday_switch" value="on" id='day_of_week1' checked='checked'
-                        onchange="is_valid_data('time_mon',this.checked);">月曜</label>：
+                        onchange="is_valid_data('time_mon',this.checked);"> 月曜</label>：
 
           {% else %}
           <label><input type="checkbox"  name="monday_switch" value="on" id='day_of_week1'
-                        onchange="is_valid_data('time_mon',this.checked);">月曜</label>：
+                        onchange="is_valid_data('time_mon',this.checked);"> 月曜</label>：
           {% endif %}
           <input type="time" name="monday_time" id="time_mon" value={{monday_time}}>
         </div>
         <div>
           {% if tuesday_switch == "on" %}
           <label><input type="checkbox"  name="tuesday_switch" value="on" id='day_of_week2' checked="checked"
-                        onchange="is_valid_data('time_tues',this.checked);">火曜</label>：
+                        onchange="is_valid_data('time_tues',this.checked);"> 火曜</label>：
           {% else %}
           <label><input type="checkbox"  name="tuesday_switch" value="on" id='day_of_week2'
-                        onchange="is_valid_data('time_tues',this.checked);">火曜</label>：
+                        onchange="is_valid_data('time_tues',this.checked);"> 火曜</label>：
           {% endif %}
           <input type="time" name="tuesday_time" id="time_tues" value="{{tuesday_time}}">
         </div>
         <div>
           {% if wednesday_switch == "on" %}
           <label><input type="checkbox"  name="wednesday_switch" value="on" id='day_of_week3' checked="checked"
-                        onchange="is_valid_data('time_wednes',this.checked);">水曜</label>：
+                        onchange="is_valid_data('time_wednes',this.checked);"> 水曜</label>：
           {% else %}
           <label><input type="checkbox"  name="wednesday_switch" value="on" id='day_of_week3'
-                        onchange="is_valid_data('time_wednes',this.checked);">水曜</label>：
+                        onchange="is_valid_data('time_wednes',this.checked);"> 水曜</label>：
           {% endif %}
           <input type="time" name="wednesday_time" id="time_wednes" value="{{wednesday_time}}">
         </div>
         <div>
           {% if thursday_switch == "on" %}
           <label><input type="checkbox"  name="thursday_switch" value="on" id='day_of_week4' checked="checked"
-                        onchange="is_valid_data('time_thurs,this.checked);">木曜</label>：
+                        onchange="is_valid_data('time_thurs,this.checked);"> 木曜</label>：
           {% else %}
           <label><input type="checkbox"  name="thursday_switch" value="on" id='day_of_week4'
-                        onchange="is_valid_data('time_thurs',this.checked);">木曜</label>：
+                        onchange="is_valid_data('time_thurs',this.checked);"> 木曜</label>：
           {% endif %}
           <input type="time" name="thursday_time" id="time_thurs" value="{{thursday_time}}">
         </div>
         <div>
           {% if friday_switch == "on" %}
           <label><input type="checkbox"  name="friday_switch" value="on" id='day_of_week5' checked="checked"
-                        onchange="is_valid_data('time_fri',this.checked);">金曜</label>：
+                        onchange="is_valid_data('time_fri',this.checked);"> 金曜</label>：
           {% else %}
           <label><input type="checkbox"  name="friday_switch" value="on" id='day_of_week5'
-                        onchange="is_valid_data('time_fri',this.checked);">金曜</label>：
+                        onchange="is_valid_data('time_fri',this.checked);"> 金曜</label>：
           {% endif %}
           <input type="time" name="friday_time" id="time_fri" value="{{friday_time}}">
         </div>
         <div>
           {% if saturday_switch == "on" %}
           <label><input type="checkbox"  name="saturday_switch" value="on" id='day_of_week6' checked="checked"
-                        onchange="is_valid_data('time_satur',this.checked);">土曜</label>：
+                        onchange="is_valid_data('time_satur',this.checked);"> 土曜</label>：
           {% else %}
           <label><input type="checkbox"  name="saturday_switch" value="on" id='day_of_week6'
-                        onchange="is_valid_data('time_satur',this.checked);">土曜</label>：
+                        onchange="is_valid_data('time_satur',this.checked);"> 土曜</label>：
           {% endif %}
           <input type="time" name="saturday_time" id="time_satur" value="{{saturday_time}}">
         </div>
         <div>
           {% if sunday_switch == "on" %}
           <label><input type="checkbox"  name="sunday_switch" value="on" id='day_of_week7' checked="checked"
-                        onchange="is_valid_data('time_sun',this.checked);">日曜</label>：
+                        onchange="is_valid_data('time_sun',this.checked);"> 日曜</label>：
           {% else %}
           <label><input type="checkbox"  name="sunday_switch" value="on" id='day_of_week7'
-                        onchange="is_valid_data('time_sun',this.checked);">日曜</label>：
+                        onchange="is_valid_data('time_sun',this.checked);"> 日曜</label>：
           {% endif %}
           <input type="time" name="sunday_time" id="time_sun" value="{{sunday_time}}">
         </div>
     </div>
-
     <div id="how_to_option">
       <h1 id="how_to_title_id">起床方法設定</h1>
       <div>
+        <span id="switch_means">テレビをつけて起こす</span>
+        <div class="switch">
+                <label class="switch__label">
+                  {% if use_tv == "on" %}
+                  <input type="checkbox"  name="use_tv" checked="checked" class="switch__input"/>
+                  {% else %}
+                  <input type="checkbox"  name="use_tv" class="switch__input"/>
+                  {% endif %}
+                  <span class="switch__content"></span>
+                  <span class="switch__circle"></span>
+                </label>
+              </div>
+        <div>
+          {% if tv_state_of_end == "on" %}
+          <label><input type="checkbox"  name="tv_toggle_switch" value="on" id='tv_toggle_switch_id' checked="checked"> 目覚めた後にテレビをつけたままにする</label>
+          {% else %}
+          <label><input type="checkbox"  name="tv_toggle_switch" value="on" id='tv_toggle_switch_id'> 目覚めた後にテレビをつけたままにする</label>
+          {% endif %}
+        </div>
+        <div>
+          {% if bs_or_digital == "digital" %}
+          <div class="tab-wrap">
+              <input id="TAB-01" type="radio" name="bs_or_digital" value="digital" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">地デジ</label>
+              <input id="TAB-02" type="radio" name="bs_or_digital" value="BS" class="tab-switch" /><label class="tab-label" for="TAB-02">BS</label>
+          </div>
+          {% else %}
+          <div class="tab-wrap">
+              <input id="TAB-01" type="radio" name="bs_or_digital" value="digital" class="tab-switch" /><label class="tab-label" for="TAB-01">地デジ</label>
+              <input id="TAB-02" type="radio" name="bs_or_digital" value="BS" class="tab-switch" checked="checked"/><label class="tab-label" for="TAB-02">BS</label>
+          </div>
+          {% endif %}
+        </div>
+        <span id=set_channel_label_id>設定チャンネル： </span>
+
+        <select name="select_channel" id="select_channel_id" >
+          {% with ''|center:12 as range %}
+          {% for _ in range %}
+          {%if forloop.counter|equal_channel:select_channel %}
+          <option value="{{ forloop.counter }}ch" name='select_channel' id="select_channel_id" selected>{{ forloop.counter }}ch</option>
+          {% else %}
+          <option value="{{ forloop.counter }}ch" name='select_channel' id="select_channel_id">{{ forloop.counter }}ch</option>
+          {% endif %}
+          {% endfor %}
+          {% endwith %}
+        </select>
+      </div>
+      <br>
+      <div>
         <span id="switch_means">サーボモータを使って起こす</span>
         <div class="switch">
-                <label class="switch__label">
-                  {% if use_servo == "on" %}
-                  <input type="checkbox"  name='use_servo' checked="checked" class="switch__input"/>
-                  {% else %}
-                  <input type="checkbox"  name='use_servo' class="switch__input"/>
-                  {% endif %}
-                  <span class="switch__content"></span>
-                  <span class="switch__circle"></span>
-                </label>
-              </div>
+            <label class="switch__label">
+              {% if use_servo == "on" %}
+              <input type="checkbox"  name='use_servo' checked="checked" class="switch__input"/>
+              {% else %}
+              <input type="checkbox"  name='use_servo' class="switch__input"/>
+              {% endif %}
+              <span class="switch__content"></span>
+              <span class="switch__circle"></span>
+            </label>
+        </div>
+      </div>
+      <br>
+      <div>
+        <span id="switch_means">目覚まし時にエアコンを起動する</span>
+        <div class="switch">
+          <label class="switch__label">
+            {% if use_air_conditioner == "on" %}
+            <input type="checkbox"  name='use_air_conditioner' checked="checked" class="switch__input"/>
+            {% else %}
+            <input type="checkbox"  name='use_air_conditioner' class="switch__input"/>
+            {% endif %}
+            <span class="switch__content"></span>
+            <span class="switch__circle"></span>
+          </label>
+        </div>
+        <div>
+          {% if hot_or_cool == "hot" %}
+          <div class="air-tab-wrap">
+              <input id="air-TAB-01" type="radio" name="hot_or_cool" value="hot" class="air-tab-switch" checked="checked" /><label class="air-tab-label" for="air-TAB-01">暖房</label>
+              <input id="air-TAB-02" type="radio" name="hot_or_cool" value="cool" class="air-tab-switch" /><label class="air-tab-label" for="air-TAB-02">冷房</label>
+          </div>
+          {% else %}
+          <div class="air-tab-wrap">
+              <input id="air-TAB-01" type="radio" name="hot_or_cool" value="hot" class="air-tab-switch" /><label class="air-tab-label" for="air-TAB-01">暖房</label>
+              <input id="air-TAB-02" type="radio" name="hot_or_cool" value="cool" class="air-tab-switch" checked="checked"/><label class="air-tab-label" for="air-TAB-02">冷房</label>
+          </div>
+          {% endif %}
+        </div>
+        <div>
+          <span id=set_temp_label_id>設定温度： </span>
+          <select name="select_temp" id="select_temp_id" >
+            {% with ''|center:4 as range %}
+            {% for _ in range %}
+            {%if forloop.counter|just_temp:set_temp %}
+            <option value="{{ forloop.counter|air_temp }}" name='select_temp' id="select_temp_id" selected>{{ forloop.counter|air_temp }}度</option>
+            {% else %}
+            <option value="{{ forloop.counter|air_temp }}" name='select_temp' id="select_temp_id">{{ forloop.counter|air_temp }}度</option>
+            {% endif %}
+            {% endfor %}
+            {% endwith %}
+          </select>
+        </div>
+      </div>
+      <br>
+      <div>
+        <div>
+          <span id="switch_means">アラームで起こす(.mp3)</span>
+          <div class="switch">
+              <label class="switch__label">
+                {% if use_sound == "on" %}
+                <input type="checkbox"  name="use_sound" checked="checked" class="switch__input"/>
+                {% else %}
+                <input type="checkbox"  name="use_sound" class="switch__input"/>
+                {% endif %}
+                <span class="switch__content"></span>
+                <span class="switch__circle"></span>
+              </label>
+          </div>
+          <div>アラーム音設定</div>
+          <select name="select_melody" id="select_melody_id" >
+            {% for melody in melody_list %}
+            {%if melody.id == select_melody_id %}
+            <option value={{ melody.id }} name='select_melody' id="select_melody_id" selected>{{ melody.file }}</option>
+            {% else %}
+            <option value={{ melody.id }} name='select_melody' id="select_melody_id">{{ melody.file }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+          <input type="submit" name='delete_melody' value="削除" id="delete_melody_id">
+          <div id="drop-zone">
+            <p>mp3ファイルをドラッグ＆ドロップもしくは</p>
+            <input type="file" name="input_melody_file" id="input_melody_file_id">
+          </div>
+        </div>
       </div>
 
-      <div>
-        <span id="switch_means">アラームで起こす</span>
-        <div class="switch">
-                <label class="switch__label">
-                  {% if use_sound == "on" %}
-                  <input type="checkbox"  name="use_sound" checked="checked" class="switch__input"/>
-                  {% else %}
-                  <input type="checkbox"  name="use_sound" class="switch__input"/>
-                  {% endif %}
-                  <span class="switch__content"></span>
-                  <span class="switch__circle"></span>
-                </label>
-              </div>
-      </div>
     </div>
-    <input type="submit" value="設定を保存する" id="submit_button">
+
+    <div id="how_to_details_option">
+
+      <div>
+        <span id="switch_means">起床時にメールを送信する</span>
+        <div class="switch">
+          <label class="switch__label">
+            {% if use_safe_mail == "on" %}
+            <input type="checkbox"  name='use_safe_mail' checked="checked" class="switch__input"/>
+            {% else %}
+            <input type="checkbox"  name='use_safe_mail' class="switch__input"/>
+            {% endif %}
+            <span class="switch__content"></span>
+            <span class="switch__circle"></span>
+          </label>
+        </div>
+        <div>
+          <div class="item">
+          <label class="label" for="safe_mail_from_label" >送信者名: </label>
+          <input id="safe_mail_from_id" type="text" name="safe_mail_from" value={{ safe_mail_from }}>
+        </div>
+        <div class="item">
+          <label class="label" for="safe_mail_to_label">相手のメールアドレス: </label>
+          <input id="safe_mail_to_id" type="email" name="safe_mail_to" value={{ safe_mail_to }}>
+        </div>
+        <div class="item">
+          <label class="label" for="safe_mail_subject_label">件名: </label>
+          <input id="safe_mail_subject_id" type="text" name="safe_mail_subject" value={{ safe_mail_subject }}>
+        </div>
+        <div class="item">
+          <label class="label" for="safe_message_label">本文: </label>
+          <textarea rows="6" cols="50" id="safe_message_id" name="safe_message">{{ safe_mail_message }}</textarea>
+        </div>
+        </div>
+
+      </div>
+      <div>
+        <span id="switch_means">寝坊時にメールを送信する</span>
+        <div class="switch">
+            <label class="switch__label">
+              {% if use_out_mail == "on" %}
+              <input type="checkbox"  name="use_out_mail" checked="checked" class="switch__input"/>
+              {% else %}
+              <input type="checkbox"  name="use_out_mail" class="switch__input"/>
+              {% endif %}
+              <span class="switch__content"></span>
+              <span class="switch__circle"></span>
+            </label>
+        </div>
+        <div>
+          <div class="item">
+            <label class="label" for="out_mail_from_label"> アラーム開始から<input id="out_line_time_id" type="number" name="out_line_time" min="0" max="60" step="5" value={{ out_line_time }}>分後に送信する</label>
+          </div>
+            <div class="item">
+              <label class="label" for="out_mail_from_label" >送信者名: </label>
+              <input id="out_mail_from_id" type="text" name="out_mail_from" value={{out_mail_from}}>
+            </div>
+            <div class="item">
+              <label class="label" for="out_mail_to_label">相手のメールアドレス: </label>
+              <input id="out_mail_to_id" type="email" name="out_mail_to" value={{out_mail_to}}>
+            </div>
+            <div class="item">
+              <label class="label" for="out_mail_subject_label">件名: </label>
+              <input id="out_mail_subject_id" type="text" name="out_mail_subject" value={{out_mail_subject}}>
+            </div>
+            <div class="item">
+              <label class="label" for="out_message_label">本文: </label>
+              <textarea rows="6" cols="50" id="out_message_id" name="out_message">{{out_mail_message}}</textarea>
+            </div>
+        </div>
+      </div>
+
+
+
+    </div>
+    <input type="submit" name='data_submit' value="設定を保存する" id="submit_button">
     </form>
 
     <script>
+    function submiFunc(obj) {
+      index = document.subm_form.ab_or_re.selectedIndex;
+      obj.form.ab_or_re.value = document.subm_form.ab_or_re.options[index].value;
+      obj.form.submit();
+    }
     function is_valid_day_of_the_week(ischecked ) {
        if( ischecked == true ) {
           document.getElementById('time_mon').disabled = false;
@@ -244,7 +433,6 @@
         document.getElementById('day_of_week7').disabled = true;
        }
     }
-
     function is_valid_data( textid, ischecked ) {
        if( ischecked == true ) {
           // チェックが入っていたら有効化
@@ -297,7 +485,6 @@
         is_valid_data('time_thurs',document.getElementsByName('thursday_switch')[0].checked)
         is_valid_data('time_fri',document.getElementsByName('friday_switch')[0].checked)
         is_valid_data('time_satur',document.getElementsByName('saturday_switch')[0].checked)
-
     }
     </script>
 

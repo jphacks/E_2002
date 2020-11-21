@@ -11,24 +11,42 @@ body {
 #schedule_option{
   position:absolute;
   left: 2.5rem;
-  padding-top:5rem;
+  padding-top:4rem;
   top:3rem;
-  padding-bottom:8rem;
-  padding-right: 61rem;
-  padding-left: 30rem;
+  padding-bottom:9rem;
+  padding-right: 76rem;
+  padding-left: 15rem;
   background-color: white;
+}
+
+
+#how_to_details_option{
+  position: absolute;
+  top:7rem;
+  margin-left: 78rem;
+  padding-top:4rem;
 }
 
 #how_to_option{
   position: absolute;
   top:3rem;
-  margin-left: 68rem;
-  padding-top:5rem;
+  margin-left: 48rem;
+  padding-top:4rem;
+}
+
+#set_temp_label_id, #set_channel_label_id {
+  position: relative;
+  top:6px;
+}
+
+#select_channel_id, #select_temp_id {
+  position: relative;
+  top:5px;
 }
 
 #submit_button{
   position:absolute;
-  margin-top: 44rem;
+  margin-top: 44.5rem;
   margin-left: 55rem;
   padding: 10px 10px 10px 10px;
   font-size: 25px;
@@ -157,8 +175,76 @@ body {
   margin-right: 50px;
   margin-top: 0px;
   white-space: nowrap;
+  font-weight: bold;
 }
 input[type="time"] {
   margin-top: 2px;
   margin-bottom: 2px;
+}
+
+.tab-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.tab-label {
+    color: White;
+    background: LightGray;
+    margin-right: 5px;
+    padding: 3px 12px;
+    order: -1;
+}
+.tab-content {
+    width: 100%;
+    display: none;
+}
+/* アクティブなタブ */
+.tab-switch:checked+.tab-label {
+    background: #66CC00;
+}
+.tab-switch:checked+.tab-label+.tab-content {
+     display: block;
+}
+/* ラジオボタン非表示 */
+.tab-switch {
+    display: none;
+}
+
+
+.air-tab-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.air-tab-label {
+    color: White;
+    background: LightGray;
+    margin-right: 5px;
+    padding: 3px 12px;
+    order: -1;
+}
+.air-tab-content {
+    width: 100%;
+    display: none;
+}
+/* アクティブなタブ */
+.air-tab-switch:checked[value="hot"]+.air-tab-label  {
+    background: #CC3333;
+}
+
+
+.air-tab-switch:checked[value="cool"]+.air-tab-label  {
+    background: DeepSkyBlue;
+}
+
+.air-tab-switch:checked+.air-tab-label+.air-tab-content {
+     display: block;
+}
+/* ラジオボタン非表示 */
+.air-tab-switch {
+    display: none;
+}
+
+#drop-zone {
+  border: 1px solid;
+  margin-top: 10px;
+  padding: 20px;
 }

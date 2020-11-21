@@ -1,7 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
-
+from django.core.validators import FileExtensionValidator
 
 class Schedule(models.Model):
     """スケジュール"""
@@ -13,3 +13,12 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.summary
+
+class SoundFile(models.Model):
+    #title = models.CharField('Schedule', max_length=30)
+    file = models.FileField(
+    '音声ファイル',
+    validators=[FileExtensionValidator(allowed_extensions=['mp3',''])])
+
+    def __str__(self):
+        return self.file.url
