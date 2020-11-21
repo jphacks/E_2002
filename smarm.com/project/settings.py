@@ -65,7 +65,7 @@ LOGGING = {
             'handlers':['file'],
             'level':'INFO',
         },
-        'smarm': {
+        'smarm.com': {
             'handlers':['file'],
             'level':'INFO',
         },
