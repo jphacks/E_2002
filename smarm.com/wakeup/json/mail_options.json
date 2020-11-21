@@ -1,0 +1,10 @@
+{
+    "out_mail_from":"annkoomoti1026@gmail.com",
+    "out_mail_to":"annkoomoti1026@gmail.com",
+    "out_mail_subject":"寝坊しています",
+    "out_mail_message":"現在まだ寝ています。起こしてください",
+    "safe_mail_from":"annkoomoti1026@gmail.com",
+    "safe_mail_to":"annkoomoti1026@gmail.com",
+    "safe_mail_subject":"起床確認メール",
+    "safe_mail_message":"起床を確認しました"
+}
