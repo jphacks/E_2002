@@ -87,8 +87,9 @@ def air_conditioner_options(request):
     json_open = open('wakeup/json/air_conditioner_options.json', 'r')
     json_load = json.load(json_open)
     select_temp_s = 'on_' + json_load["hot_or_cool"] + '_' + json_load["set_temp"]
-    json_database_open = open('wakeup/json/air_conditioner_options.json', 'r')
+    json_database_open = open('wakeup/json/air_conditioner_commands.json', 'r')
     json_database_load = json.load(json_database_open)
+    json_data = json_database_load[select_temp_s]
     #json形式の文字列を生成
-    json_str = json.dumps(json_load, ensure_ascii=False, indent=2)
+    json_str = json.dumps(json_data, ensure_ascii=False, indent=2)
     return HttpResponse(json_str)
