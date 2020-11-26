@@ -9,6 +9,8 @@ import numpy as np
 import datetime
 import json
 import subprocess
+import glab
+from natsort import natsorted
 
 def classname_management(altNames,data_path):
     if altNames is None:
@@ -44,11 +46,26 @@ def color_management(num_classes,class_colors,altNames):
         col = (int(cvcol[0][0][0]), int(cvcol[0][0][1]), int(cvcol[0][0][2]))
         class_colors_own.append(col)
         class_colors[altNames[i]] = class_colors_own[i]
+        
+def video_creater(main_process,img_dir,original_video_path):
+    frame_img_folder = img_dir + '*.jpg'
+    frame_images = natsorted(glob.glob(frame_img_folder))
+    full_frame = len(frame_images)
+    fps = math.ceil(full_frame/main_process)
+    fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
+    sample_img = cv2.imread(frame_images[0],cv2.IMREAD_COLOR)
+    height, width, channels = sample_img.shape[:3]
+    recording = cv2.VideoWriter(original_video_path, fourcc, fps, (width, height))
+    
+    for i in range(full_frame):
+        img = cv2.imread(frame_images[i],cv2.IMREAD_COLOR)
+        recording.write(img)
+        
+    recording.release()
 
-def image_detection(image_path, network, class_names, class_colors, thresh,save_result_path,width,height):
+def image_detection(frame, network, class_names, class_colors, thresh,save_result_path,width,height,first_flag):
     darknet_image = darknet_jphack.make_image(width, height, 3)
-    image = cv2.imread(image_path)
-    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image_resized = cv2.resize(image_rgb, (width, height),
                                interpolation=cv2.INTER_LINEAR)
 
@@ -60,78 +77,59 @@ def image_detection(image_path, network, class_names, class_colors, thresh,save_
     pred_image = cv2.imwrite(save_result_path,result_image)
     darknet_jphack.print_detections(detections)
     return result_image, detections
-    
-def yolo_process(img_path,save_result_path):
-    image, detections = image_detection(img_path, network, class_names, class_colors, args.thresh,save_result_path)
-            
-    if len(detections) == 0:
-        monitor = str(0)
-
-    else:
-        row = np.shape(detections)[0]
-        for r in range(row):
-            detection_result = detections[r][0]
-            if detection_result == "person":
-                monitor = str(1)
-            else:
-                monitor = str(0)
-
-    return monitor
                     
 
 def start_process(cap,save_img_dir,save_result_dir,width,height,network,class_names,class_colors,threshold):
-    start_time = time.time()
-    while True:
-        with open('state.json', 'r') as fr:
-            state_json_file = json.load(fr)
+    first_flag = False
+    start = time.time()
+    while True:       
+        ret, frame = cap.read()
+        dt_now = datetime.datetime.now()
+        date = dt_now.strftime('%Y%m%d_%H%M%S%f')            
+        save_result_path = str(save_result_dir + date + ".jpg")
+        save_img_path = str(save_img_dir + date + ".jpg")
+        cv2.imwrite(save_img_path,frame)
 
-        if state_json_file["state"] == "1":
-            person_count = 0
-        
-            ret, frame = cap.read()
-            dt_now = datetime.datetime.now()
-            date = dt_now.strftime('%Y%m%d_%H%M%S%f')            
-            save_result_path = str(save_result_dir + date + ".jpg")
-            save_img_path = str(save_img_dir + date + ".jpg")
-            cv2.imwrite(save_img_path,frame)
-
-            image, detections = image_detection(save_img_path, network, class_names, class_colors, threshold,save_result_path,width,height)
-
-            if len(detections) == 0:
-                monitor = str(0)
-
-            else:
-                row = np.shape(detections)[0]
-                for r in range(row):
-                    detection_result = detections[r][0]
-                    if detection_result == "person":
-                        person_count += 1
-                    else:
-                        pass
-            if person_count >= 1:
-                monitor = str(1)
-            else:
-                monitor = str(0)
-
-            elapsed_time = time.time() - start_time
-            print("elapsed_time : " , elapsed_time)
-            if elapsed_time > 1:                
-                jphack_dict = {"person": monitor}
-                with open('jphack.json', 'w') as fw:
-                    json.dump(jphack_dict, fw, ensure_ascii=False)
-
-                start_time = time.time()
-        
-        elif state_json_file["state"] == "0":
-            print("finish YOLO")
-            break
-
-    passward = b"robins\n"        
-    subprocess.run(("sudo","-S","reboot"),input = passward , check = True)
+        image, detections = image_detection(frame, network, class_names, class_colors, threshold,save_result_path,width,height,first_flag)
             
-def ready_yolo():
+        cv2.imshow("YOLO",image)
+        cv2.moveWindow("YOLO", 1000, 200)
+        
+        if len(detections) == 0:
+            monitor = str(0)
+
+        else:
+            row = np.shape(detections)[0]
+            for r in range(row):
+                detection_result = detections[r][0]
+                if detection_result == "person":
+                    monitor = str(1)
+                else:
+                    monitor = str(0)
+
+        jphack_dict = {"person": monitor}
+        if monitor == "1":
+            result_message = "person in bed"
+            print(result_message)
+        else:
+            result_message = "person out bed"
+            print(result_message)
+        
+        first_flag = True
+
+        elapsed = time.time() - start
+        if elapsed > set_time:
+            print(" ---------- stop AI camera ----------")
+            cap.release()
+            video_creater(elapsed,save_img_dir,original_video_path)
+            video_creater(elapsed,save_result_dir,result_video_path)
+            break       
+            
+def main():
     cap = cv2.VideoCapture(0)
     fps = cap.get(cv2.CAP_PROP_FPS)
+    
+    set_time = 15
     
     weights_path = "yolov4-tiny.weights"
     cfg_path = "cfg/yolov4-tiny.cfg"
@@ -166,7 +164,7 @@ def ready_yolo():
 
     if not os.path.isdir(result_img_dir):
         os.makedirs(result_img_dir)
-    
+        
     dt_now = datetime.datetime.now()
     date = dt_now.strftime('%Y%m%d_%H%M%S')
     save_img_dir = ori_img_dir + "/" + date
@@ -175,10 +173,16 @@ def ready_yolo():
     os.makedirs(save_result_dir, exist_ok=True)
     save_img_dir = save_img_dir + "/"
     save_result_dir = save_result_dir + "/"
+    original_video_path = save_img_dir + date + ".mp4"
+    result_video_path = save_result_dir + date + "_result.mp4"
 
     print("--------------------------------------------------------------------------------")
     
     start_process(cap,save_img_dir,save_result_dir,width,height,network,class_names,class_colors,threshold)
 
-        
+    
+if __name__ == '__main__':
+    main()
+    
+
 

@@ -1,0 +1,11 @@
+# vi /etc/systemd/system/rc-local.service
+
+[Unit]
+Description=startup deamon
+
+[Service]
+ExecStart=/home/robins/startup.sh
+Type = simple
+
+[Install]
+WantedBy=multi-user.target
