@@ -8,13 +8,13 @@
 [Logicool C270n](https://www.logicool.co.jp/ja-jp/product/hd-webcam-c270n)はLogicoolが販売しているUSB接続のカメラである。このカメラはHD 720pで内蔵カメラのないデスクトップPCやテレビ通話などに利用されている。<br>
 本プロジェクトでは使用するマイコンボードにはカメラ入力としてUSBとraspberry pi用の2つが用意されていたが汎用性の高いUSB接続にするため購入当時安価で納期の早かった本製品を採用した。 <br> 
 
-# 画像差し込み希望 ( logicoolcamera.jpg )
+![logicoolcamera](https://user-images.githubusercontent.com/73453598/100375571-5b77e380-3051-11eb-93b5-584c8cbc6aaa.jpg)
 
 # Jetson Nano<br>
 [Jetson Nano](https://static6.arrow.com/aropdfconversion/1280937d98cee0191d01d75dc0cb547310d0fa57/jetson-nano-module-datasheet-us-1031771-r3-hr.pdf)とはNvidiaが開発したマイコンボードである。 <br>
 本プロジェクトでは著者がAI開発においてLinuxを使用しているため、OSがLinuxでAIの並列処理に優れたGPUを搭載した本機を採用した。
 
-# 画像差し込み希望 ( jetson nano.jpg )
+![jetson nano](https://user-images.githubusercontent.com/73453598/100375614-6af72c80-3051-11eb-8f24-f8dd948bd090.jpg)
 
 ## 必要なもの （購入品） <br>
 * Jetson Nano <br>
