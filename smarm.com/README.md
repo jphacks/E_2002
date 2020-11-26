@@ -47,7 +47,7 @@ https://github.com/naritotakizawa/django-simple-calendar
 
 ## 今後の展望
 * メールだけでなく、LINE APIを使用したLINEへの通知機能
-* 各デバイス毎のID，パスワードを設定し，1つのベッド毎にDBで管理し対応できるようにする。
+* 各デバイス毎のID，パスワードを設定し，1つのベッド毎に管理し対応できるようにする。
 * JavaやKotlin,swiftを使用して、スマホ用のレイアウトを作成する。
 
 ## 注力したことと意気込み
