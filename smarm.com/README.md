@@ -15,12 +15,12 @@ https://jphack-smarm.com/
 
 ### 2.SCHEDULEページ
 目覚ましを掛ける時間を設定するためのページです。
-カレンダーの部分は下記のサイトを参考にさせていただきました。
+カレンダーの部分は下記のサイトを参考にさせていただきました。  
 
-Djangoでカレンダーを作るシリーズ
-https://blog.narito.ninja/detail/11
-github
-https://github.com/naritotakizawa/django-simple-calendar
+Djangoでカレンダーを作るシリーズ  
+https://blog.narito.ninja/detail/11  
+github  
+https://github.com/naritotakizawa/django-simple-calendar  
 
 こちらの方のコードをベースにsmarmに適した形になるように書き換えています。
 
