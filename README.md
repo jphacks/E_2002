@@ -93,33 +93,31 @@ AIを活用して人間の起床を管理するプログラムと起床を促す
 
 ## 開発技術
 ### 活用した技術
-#### API・データ
+### API・データ
 * COCOデータセット
 
-#### フレームワーク・ライブラリ・モジュール
-アプリケーション関連
+### フレームワーク・ライブラリ・モジュール
+#### アプリケーション関連
 * Django
 * PostgerSQL(githubはsqlite版をupload)
 * さくらVPS
 * nginx
 * gunicorn
-デバイス関連
+
+#### デバイス関連
 * Darknet
 * 赤外線モジュール
 * 圧力センサ
 * サーボモータ
-
-言語
-* Python
-* JavaScript
-* C++
-
-
-#### デバイス
 * Arduino
 * ESP32
 * Jetson Nano
 * PC
+
+#### 言語
+* Python
+* JavaScript
+* C++
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術
