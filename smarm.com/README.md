@@ -1,43 +1,53 @@
-# SMARM
+# SMARM.com
+Djangoフレームワークで作成したWEBアプリケーションです。
+メインPCやESP32とREST APIを使用して通信を行い、データの送伝達を行っています。
+また、ローカル環境だけではなく、さくらVPSを利用して，本番環境としての実装も行っています。
 
-[![IMAGE SMARM](https://user-images.githubusercontent.com/73453598/98379694-ed13b700-208a-11eb-8032-d70412bbb94f.png)](https://www.youtube.com/watch?v=IIMCaGkYzOM&feature=youtu.be)
-※動画リンク付き
+# WEBアプリケーション説明
+## ページURL
+https://jphack-smarm.com/  
+## ページ毎の説明
+### 1.TOPページ
+起床時間のグラフを見るためのページです。
+使用者のニーズに対応できるように
+横軸をDAY，WEEK，MONTHの3つから選択できるようにしました。
+加えて、朝起きる時間にムラがある方のために、目標時間との差を表示する機能も追加しました。
 
-## 製品概要
-目覚まし×Tech
-### 背景(製品開発のきっかけ、課題等）
-私たちは目覚ましで起きられない、出張でいつもより早く起きなければならない、そんな方々に確実な起床を促すシステムを提案します。
-このシステムは昨今のコロナウイルスの影響により在宅ワークをしていた方がコロナウイルス収束に伴って通常勤務に戻った際に生活リズムを取り戻す手段として大いに役立ちます。
-AIを活用して人間の起床を管理するプログラムと起床を促すデバイスを開発して連携し、あらかじめ設定した時間になっても人が起床していないとAIが判断した場合に起床デバイスに命令を出して起床させるシステムを開発しました。このシステムを導入すれば寝坊による遅刻回避は間違いなく、皆様に快適な朝の時間を過ごしていただけることを確約します！
+### 2.SCHEDULEページ
+目覚ましを掛ける時間を設定するためのページです。
+カレンダーの部分は下記のサイトを参考にさせていただきました。
 
-### 製品説明（具体的な製品の説明）
-目覚まし機能を有したIotベッドです。
-#### 使い方
-1.「smarm」 https://www.smarm-mikha.com/ にアクセスして、[Schedule]や[HOW TO WAKEUP]ページから目覚ましを掛ける時間や方法を設定します。  
-時間の設定方法は様々で、
-* 1日毎に予定と合わせて設定  
-![Smart Alarm - Google Chrome 2020-11-06 14-39-58 (3)](https://user-images.githubusercontent.com/73453598/98354102-9b0b6b00-2063-11eb-9a10-a9e14fe3c861.gif)
+Djangoでカレンダーを作るシリーズ
+https://blog.narito.ninja/detail/11
+github
+https://github.com/naritotakizawa/django-simple-calendar
 
-* 複数の予定を一度に設定  
-![Smart Alarm - Google Chrome 2020-11-06 14-41-29 (3)](https://user-images.githubusercontent.com/73453598/98354194-ba09fd00-2063-11eb-9362-0ba556e25528.gif)
+こちらの方のコードをベースにsmarmに適した形になるように書き換えています。
 
-* 予定を設定していない日に目覚ましを掛けるかどうかの設定  
-![Smart Alarm - Google Chrome 2020-11-06 14-44-25 (3)](https://user-images.githubusercontent.com/73453598/98354458-1705b300-2064-11eb-97bf-588dac15cdb8.gif)
+### 3.HOWTOページ
+予定がない場合に目覚ましを起動するかや，起床方法について設定できるページです。
+デバイスへのデータ転送のために送受信用のAPIを作成しています。
 
-このように使用者のニーズに合わせた時間や目覚まし方法の設定が可能です。
+#### データ送受信用のAPIについて
+データ送受信用のAPI
+- その日のスケジュールを送信するAPI  
+"https://jphack-smarm.com/api/time_data/"  
+- HOWTOページの設定データを送信するAPI  
+"https://jphack-smarm.com/api/how_to_options/"
+- HOWTOページに設定された目覚まし用の音声ファイルのURLを送信するAPI  
+"https://jphack-smarm.com/api/melody/"
+- HOWTOページに設定されたエアコンに命令するための配列を送信するAPI  
+"https://jphack-smarm.com/api/air_conditioner_options/"
+- HOWTOページに設定されたメールアドレスに遅刻時のメール送信を行うAPI  
+"https://jphack-smarm.com/api/send_out_mail/"
+- HOWTOページに設定されたメールアドレスに起床時のメール送信を行うAPI  
+"https://jphack-smarm.com/api/send_safe_mail/"
 
-2. 設定した時間と方法で目覚ましを開始します。
-ベッドから出るまで決して止まりません。
-
-3. smarmトップページから，自分の起床時間の推移をグラフで確認できます。
-起床時間だけでなく、起床時間と目標時間との差も見ることができるため，目覚まし開始から何分で起きれているかを管理することも可能です。
-
-![Smart Alarm - Google Chrome 2020-11-06 19-56-29](https://user-images.githubusercontent.com/73453598/98358656-6222c480-206a-11eb-836a-5fbdfb46e8d5.gif)
+##### ※メールの送信に関しては、悪用の危険があるため，実際には送信しない設定にしています。本番運用する際には、SMTPサーバーを利用します。
 
 
 
-
-#### 構成
+## 構成
 本サービスのデバイス構成はこちらの図のようになっています。
 ![構成図1](https://user-images.githubusercontent.com/73453598/98344625-dbb0b780-2056-11eb-8935-f7b26ac390a2.png)
 
