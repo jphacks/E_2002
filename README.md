@@ -13,7 +13,7 @@ AIを活用して人間の起床を管理するプログラムと起床を促す
 ### 製品説明（具体的な製品の説明）
 目覚まし機能を有したIotベッドです。
 #### 使い方
-1.「smarm」 https://www.smarm-mikha.com/ にアクセスして、[Schedule]や[HOW TO WAKEUP]ページから目覚ましを掛ける時間や方法を設定します。  
+1.「smarm」 https://jphack-smarm.com/ にアクセスして、[Schedule]や[HOW TO WAKEUP]ページから目覚ましを掛ける時間や方法を設定します。  
 時間の設定方法は様々で、
 * 1日毎に予定と合わせて設定  
 ![Smart Alarm - Google Chrome 2020-11-06 14-39-58 (3)](https://user-images.githubusercontent.com/73453598/98354102-9b0b6b00-2063-11eb-9a10-a9e14fe3c861.gif)
