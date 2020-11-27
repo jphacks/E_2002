@@ -58,7 +58,9 @@ https://github.com/naritotakizawa/django-simple-calendar
 ### フレームワーク・ライブラリ・モジュール
 #### フレームワーク  
 * Django  
-#### RDD  
+#### ライブラリ 
+* requirement.txtに記載
+#### RDB  
 * PostgerSQL(githubはsqlite版をupload)  
 #### 本番環境    
 * さくらVPS  
@@ -74,6 +76,7 @@ https://github.com/naritotakizawa/django-simple-calendar
 * webアプリから様々な方法で目覚ましを設定できる。
 * webアプリからデバイスへのデータの送受信を自動で行ってくれる。
 * さくらVPSを用いて、ローカル環境でなくとも、目覚ましを設定できる。
+* 起床時または寝坊時にメールを送信してくれる。
 
 #### 特に力を入れた部分  
 DBからグラフに可視化するためのデータの受け渡し部分  
