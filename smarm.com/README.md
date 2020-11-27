@@ -59,7 +59,7 @@ https://github.com/naritotakizawa/django-simple-calendar
 #### フレームワーク  
 * Django  
 #### ライブラリ 
-* requirement.txtに記載
+* requirements.txtに記載
 #### RDB  
 * PostgerSQL(githubはsqlite版をupload)  
 #### 本番環境    
