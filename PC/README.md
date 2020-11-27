@@ -15,12 +15,16 @@
   - schedule 0.6.0
 
 # 実行方法
-1. smarm.pyを書き換える
+1. smarm.pyを書き換える  
+
+
 Arduino Nano Everyのポート番号を確認し，17行目のポート番号(COM10)を書き換える．
 ```
 line 17    sen_ard = initialize("COM10", 115200)
 ```
-2. connect_arduino.pyを書き換える
+2. connect_arduino.pyを書き換える  
+
+
 ESP32のIPアドレスを確認し，57，63，68，73，78行目のアドレス(192.168.11.37)を書き換える．
 ```
 line 57    requests.post('http://192.168.11.37/ledon')
