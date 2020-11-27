@@ -35,10 +35,8 @@ String message = "Initial Message";
 String Readings;
 boolean servo_flag = false;
 
-const char* ssid = "Buffalo-G-59F4";
-const char* password = "74aeffudxiudt";
-//const char* ssid = "AirPort12594";
-//const char* password = "3574567163731";
+const char* ssid = "<your ssid>";
+const char* password = "<your password>";
 const char* serverName = "https://jphack-smarm.com/api/air_conditioner_options/";
 
 int pos = 0;
