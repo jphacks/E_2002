@@ -5,7 +5,7 @@ PCからWi-Fiを経由して送られた命令を元に，部屋の照明・TV�
 
 ## Demo
 実際に家電やサーボモータを動かした時の様子です．<br>
-![esp32_demo_movie](.gif) <!-- デモ動画を載せる？ -->
+<img src="https://user-images.githubusercontent.com/73453598/100400848-2bedc900-309b-11eb-8c3d-a955b91ceb5e.gif" width="600px">
 
 ## Usage
 **※使用する前に赤外線リモコンの送信コードを調べておく必要があります．<br>
