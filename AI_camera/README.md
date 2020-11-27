@@ -253,6 +253,7 @@ Ubuntu 18.04 LTSではいくつかのスタートアップサービスの変更�
 また次のコマンドでスタートアップサービスを終了させることができる。<br>
 * スタートアップサービスの終了<br>
 `sudo systemctl stop rc-local`<br>
+
 * スタートアップサービスの無効化<br>
 `sudo systemctl disable rc-local`<br>
 
