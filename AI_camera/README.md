@@ -94,7 +94,7 @@ OS（ Ubuntu 18.04 LTS )&nbsp;&nbsp;:&nbsp;&nbsp;[JetPack 4.4.1](https://develop
 そこでJetson Nanoにて13fpsを出せることが確認されている __yolov4-tiny.cfg__ を採用した。<br>
 このファイルは"darknet/cfg/"にすでに存在するものである。<br>
 また開発者がすでに公開された「人」を含む80種類の画像データセットで学習して得られた重みである __yolov4-tiny.weights__ にて人の検出を行った。<br>
-このファイルは以下のコマンドを実行することで入手加納である。<br>
+このファイルは以下のコマンドを実行することで入手可能である。<br>
 <br>
 `wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights`
 
