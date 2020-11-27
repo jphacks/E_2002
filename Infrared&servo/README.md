@@ -1,7 +1,8 @@
 # Esp32 Server(Infrared&Servo motor)
 ESP32を使って赤外線LEDやサーボモータを動かす部分の説明です．<br>
 PCからWi-Fiを経由して送られた命令を元に，部屋の照明・TV・エアコン・サーボモータを動かすことができます．<br>
-![esp32_device_image](.png) <!-- 装置全体の画像を貼る予定 -->
+<img src="https://user-images.githubusercontent.com/73453598/100401204-2349c280-309c-11eb-8118-76362f712df7.jpg" width="300px">
+<!-- 装置全体の画像を貼る予定 -->
 
 ## Demo
 実際に家電やサーボモータを動かした時の様子です．<br>
