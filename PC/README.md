@@ -41,7 +41,9 @@ line 73    requests.post('http://192.168.11.37/air')
 ```
 line 78    requests.post('http://192.168.11.37/servo')
 ```
-2. connect_jetson.pyを書き換える
+3. connect_jetson.pyを書き換える  
+
+
 Jetson NanoのIPアドレスを確認し，15，22行目のアドレス(192.168.11.38:5000)を書き換える．
 ```
 line 15    pred_result = requests.get('http://192.168.11.38:5000/api/return_result').json()
@@ -49,12 +51,16 @@ line 15    pred_result = requests.get('http://192.168.11.38:5000/api/return_resu
 ```
 line 22    response = requests.post('http://192.168.11.38:5000/api/overwrite_state')
 ```
-3. start_yolo.pyを書き換える
+4. start_yolo.pyを書き換える  
+
+
 Jetson NanoのIPアドレスを確認し，5行目のアドレス(192.168.11.38:5000)を書き換える．
 ```
 line 5    response = requests.get('http://192.168.11.38:5000/api/start_yolo')
 ```
-4. smarm.pyを実行する
+5. smarm.pyを実行する  
+
+
 smarm.pyのあるフォルダ(./E_2002/PC/)に作業ディレクトリを移動し，smarm.pyを実行する<br>
 `cd ./E_2002/PC/`<br>
 `python smarm.py`
