@@ -75,9 +75,9 @@ OS（ Ubuntu 18.04 LTS )&nbsp;&nbsp;:&nbsp;&nbsp;[JetPack 4.4.1](https://develop
 72行目 ： NVCC=/usr/local/cuda/bin/nvcc <br>
  <br>
 3.　コンパイルする <br>
-<br>
+
 `make` <br>
-<br>
+
 エラーがなければコンパイル成功！
 
 ## YOLO デフォルト実行方法 <br>
