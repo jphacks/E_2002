@@ -39,7 +39,7 @@ AIを活用して人間の起床を管理するプログラムと起床を促す
 
 #### 構成
 本サービスのデバイス構成はこちらの図のようになっています。
-![image](https://user-images.githubusercontent.com/73453598/100397614-03130700-308e-11eb-9c7a-d94060716b1d.png)
+![image](https://user-images.githubusercontent.com/73453598/100409166-87758200-30ae-11eb-9f6d-c0b7ab1e5b3a.png)
 
 システムの主な流れは，
 1. 毎日0時頃にwebアプリケーションから時間や起床方法情報を取得。
